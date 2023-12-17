@@ -92,26 +92,27 @@ var upperCasedCharacters = [
 // Function to prompt user for password options
 function getPasswordOptions() {
   let length = parseInt(prompt(`Choose password length from 8 to 128 `));
-  if (length >= 8 && length <= 128) {
-    let specialChr = confirm('Do you need special characters in your password?');
-    let numbers = confirm('Do you need numbers in your password?');
-    let uppercase = confirm('Do you need uppercase characters in your password?');
-    let lowercase = confirm('Do you need lowercase characters in your password?');
-    return {
-      length: length,
-      specialCharacter: specialChr,
-      numberCharacter: numbers,
-      uppecaseCharacter: uppercase,
-      lowercaseCharacter: lowercase,
-    }
+  let specialChr = confirm('Do you need special characters in your password?');
+  let numbers = confirm('Do you need numbers in your password?');
+  let uppercase = confirm('Do you need uppercase characters in your password?');
+  let lowercase = confirm('Do you need lowercase characters in your password?');
+  if ((specialChr || numbers || uppercase || lowercase) && (length >= 8 && length <= 128)) {
+      return {
+        length: length,
+        specialCharacter: specialChr,
+        numberCharacter: numbers,
+        uppecaseCharacter: uppercase,
+        lowercaseCharacter: lowercase,
+      }
   } else {
-    alert('Start again and choose another number.');
+    alert('Choose another characters');
+    getPasswordOptions();
     return;
   }
 }
   
-let selectedPasswordOptions = getPasswordOptions();
-console.log(selectedPasswordOptions);
+//let selectedPasswordOptions = getPasswordOptions();
+//console.log(selectedPasswordOptions);
 
 // Function for getting a random element from an array
 function getRandom(arr) {
@@ -121,25 +122,41 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-  let selectedPasswordOptions = getPasswordOptions();
-  let generatedPassword = []
-  if (selectedPasswordOptions.specialCharacter) {
-    let generatedSpecialCht = getRandom(specialCharacters);
-    generatePassword.push(generatedSpecialCht);
+    let selectedPasswordOptions = getPasswordOptions();
+    let megaArr = [];
+    let generatedPassword = [];
+
+    if (selectedPasswordOptions.specialCharacter) {
+      let generatedSpecialCht = getRandom(specialCharacters);
+      generatedPassword.push(generatedSpecialCht);
+      megaArr = megaArr.concat(specialCharacters);
+    }
+
+    if (selectedPasswordOptions.numberCharacter) {
+      let generatedNumber = getRandom(numericCharacters);
+      generatedPassword.push(generatedNumber);
+      megaArr = megaArr.concat(numericCharacters);
+    }
+
+    if (selectedPasswordOptions.uppecaseCharacter) {
+      let generatedUppecaseCharacter = getRandom(upperCasedCharacters);
+      generatedPassword.push(generatedUppecaseCharacter);
+      megaArr = megaArr.concat(upperCasedCharacters);
+    }
+    if (selectedPasswordOptions.lowercaseCharacter) {
+      let generatedLowercaseCharacter = getRandom(lowerCasedCharacters);
+      generatedPassword.push(generatedLowercaseCharacter);
+      megaArr = megaArr.concat(lowerCasedCharacters);
   }
 
-  if (selectedPasswordOptions.numberCharacter) {
-    let generatedNumber = getRandom(numericCharacters);
-    generatePassword.push(generatedNumber);
+  console.log(megaArr);
+  for (let i = 0; i < (selectedPasswordOptions.length - 4); i++) {
+    let generatedCharacter = getRandom(megaArr);
+    generatedPassword.push(generatedCharacter);
   }
 
-  if (selectedPasswordOptions.numberCharacter) {
-    let generatedNumber = getRandom(numericCharacters);
-    generatePassword.push(generatedNumber);
-  }
-
-  //console.log(selectedPasswordOptions);
-  //return selectedPasswordOptions;
+  generatedPassword = generatedPassword.join('');
+  return generatedPassword;
 };
 
 
