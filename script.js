@@ -122,6 +122,7 @@ function generatePassword() {
     let selectedPasswordOptions = getPasswordOptions();
     let megaArr = [];
     let generatedPassword = [];
+    
 
     if (selectedPasswordOptions.specialCharacter) {
       let generatedSpecialCht = getRandom(specialCharacters);
@@ -145,8 +146,8 @@ function generatePassword() {
       generatedPassword.push(generatedLowercaseCharacter);
       megaArr = megaArr.concat(lowerCasedCharacters);
   }
-
-  for (let i = 0; i < (selectedPasswordOptions.length - 4); i++) {
+  
+  while (generatedPassword.length < selectedPasswordOptions.length) {
     let generatedCharacter = getRandom(megaArr);
     generatedPassword.push(generatedCharacter);
   }
