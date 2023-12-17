@@ -105,14 +105,11 @@ function getPasswordOptions() {
         lowercaseCharacter: lowercase,
       }
   } else {
-    alert('Choose another characters');
+    alert('Choose another options');
     getPasswordOptions();
     return;
   }
 }
-  
-//let selectedPasswordOptions = getPasswordOptions();
-//console.log(selectedPasswordOptions);
 
 // Function for getting a random element from an array
 function getRandom(arr) {
@@ -149,7 +146,6 @@ function generatePassword() {
       megaArr = megaArr.concat(lowerCasedCharacters);
   }
 
-  console.log(megaArr);
   for (let i = 0; i < (selectedPasswordOptions.length - 4); i++) {
     let generatedCharacter = getRandom(megaArr);
     generatedPassword.push(generatedCharacter);
@@ -158,7 +154,6 @@ function generatePassword() {
   generatedPassword = generatedPassword.join('');
   return generatedPassword;
 };
-
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
